@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Sort {
+    /**
+     * 冒泡排序
+     * @param nums
+     */
     public void bubble_sort(int[] nums) {
         int len = nums.length;
         // 本次循环有交换
@@ -27,6 +31,9 @@ public class Sort {
         System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));
     }
 
+    /**
+     * 插入排序
+     */
     public void insert_sort(int[] nums) {
         int len = nums.length;
         for (int i = 0; i < len - 1; i++) {
@@ -70,6 +77,10 @@ public class Sort {
         System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));
     }
 
+    /**
+     * 选择排序
+     * @param nums
+     */
     public void selection_sort(int[] nums) {
         int len = nums.length;
         // 每次循环都是找最小的元素
@@ -89,6 +100,10 @@ public class Sort {
         System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));
     }
 
+    /**
+     * 归并排序
+     * @param nums
+     */
     public void merge_sort_c(int[] nums) {
         divide(nums, 0, nums.length - 1);
         System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));
@@ -164,6 +179,10 @@ public class Sort {
         }
     }
 
+    /**
+     * 快排
+     * @param nums
+     */
     public void quick_sort_c(int[] nums) {
         quick_sort(nums, 0, nums.length - 1);
         System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));

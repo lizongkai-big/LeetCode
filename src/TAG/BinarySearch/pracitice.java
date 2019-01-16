@@ -1,12 +1,12 @@
 package TAG.BinarySearch;
 
 public class pracitice {
-    /**
-     * 最简单的二分搜索
-     * @param nums
-     * @param target
-     * @return
-     */
+/**
+ * 最简单的二分搜索
+ * @param nums
+ * @param target
+ * @return
+ */
     public int binarySearch(int[] nums, int target) {
         int lo = 0, hi = nums.length-1;
         /*循环条件*/

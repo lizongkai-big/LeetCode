@@ -8,7 +8,7 @@ public class ClassCreater {
         while(scanner.hasNext()) {
             String s = scanner.nextLine();
             s = " " + s;
-            System.out.println(s.replaceAll("\\.|\\s+", "_"));
+            System.out.println(s.replaceAll("\\.|\\(|\\)|\\,|\\s+", "_"));
         }
     }
 }
