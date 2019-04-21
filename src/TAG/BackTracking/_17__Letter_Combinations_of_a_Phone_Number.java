@@ -15,7 +15,7 @@ public class _17__Letter_Combinations_of_a_Phone_Number {
         List<String> res = new ArrayList<>();
         int len = digits.length();
         for(int i = 0; i < len; i ++) {
-            // first
+            // Main
             String s = "";
             if(digits.charAt(i) == '2') {
                 s = "abc";
@@ -67,7 +67,7 @@ public class _17__Letter_Combinations_of_a_Phone_Number {
         int len = digits.length();
         res.add("");
         for(int i = 0; i < len; i ++) {
-            // first optimization point
+            // Main optimization point
             String s = mapping[digits.charAt(i) - '0'];
             // second optimization point
             while(res.peek().length() == i) {

@@ -1,10 +1,54 @@
 package Ordered;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class _3__Longest_Substring_Without_Repeating_Characters {
+    // 利用ASCII 128 表示字符集 + 记录下标 + 滑动窗口
+    public int lengthOfLongestSubstring_Optimized(String s) {
+        int n = s.length(), ans = 0;
+        int[] index = new int[128]; // current index of character
+        // try to extend the range [i, j]
+        for (int j = 0, i = 0; j < n; j++) {
+            i = Math.max(index[s.charAt(j)], i);
+            ans = Math.max(ans, j - i + 1);
+            index[s.charAt(j)] = j + 1;
+        }
+        return ans;
+    }
+
+    // 滑动窗口，不记录坐标，只记录字符
+    public int lengthOfLongestSubstring_SldingWindow(String s) {
+        if(s == null || s.length() == 0) return 0;
+        int len = s.length();
+        int lo = 0, hi = 0;
+        int res = 0;
+        List<Character> list = new LinkedList<>();
+        while (hi < len) {
+            char c = s.charAt(hi);
+            boolean had = list.contains(c);
+            if(!had) {
+                int tmp = hi-lo+1;
+                res = Math.max(tmp, res);
+                list.add(c);
+            }
+            else {
+                // int tmp = hi-lo;
+                // res = Math.max(tmp, res);
+                while (list.contains(c)) {
+                    // 去掉左指针指向元素
+                    // char t = s.charAt(lo);
+                    ((LinkedList<Character>) list).removeFirst();
+                    lo ++;
+                }
+                // 增加
+                list.add(c);
+            }
+            hi ++;
+        }
+        return res;
+    }
+
+    // 记录坐标，清空不需要的字符
     public int lengthOfLongestSubstring1(String s) {
         if(s == null)
             return 0;
@@ -101,4 +145,6 @@ public class _3__Longest_Substring_Without_Repeating_Characters {
         }
         return len;
     }
+
+
 }

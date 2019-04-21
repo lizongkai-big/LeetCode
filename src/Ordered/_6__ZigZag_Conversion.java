@@ -67,10 +67,13 @@ public class _6__ZigZag_Conversion {
         int inx = 0;
         for(int i = 0; i < len; i ++) {
             res[inx].append(s.charAt(i));
-            // change the direction
+            // change the direction **important step!!!!
             if(inx == 0) direction = 1;
             if(inx == numRows - 1) direction = -1;
             inx += direction;
+            // attention to outOfBounds, new test cases
+            if(inx >= numRows) inx = numRows-1;
+            if(inx < 0) inx = 0;
         }
         for(int i = 1; i < numRows; i ++) {
             res[0].append(res[i]);

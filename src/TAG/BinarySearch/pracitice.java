@@ -3,9 +3,11 @@ package TAG.BinarySearch;
 public class pracitice {
 /**
  * 最简单的二分搜索
+ * 如果查找失败，二分搜索的lo值是插入位置
  * @param nums
  * @param target
- * @return
+ * @return index of the search key, if it is contained in the array;
+ *         otherwise, <tt>(-(<i>insertion point</i>) - 1)</tt>.
  */
     public int binarySearch(int[] nums, int target) {
         int lo = 0, hi = nums.length-1;
@@ -25,7 +27,7 @@ public class pracitice {
                 hi = mid - 1;
             }
         }
-        return -1;
+        return -(lo+1);
     }
 
     /**
@@ -207,12 +209,13 @@ public class pracitice {
 
     public static void main(String[] args) {
         pracitice t = new pracitice();
-        for (int i = 0; i < 100; i++) {
-            double num1 = t.sqrt_binarySearch_1(i, 6);
-            double num2 = t.sqrt_binarySearch_2(i, 0.000001);
-            System.out.println(i + " : " + num1 + ", " + num2);
-
-        }
+        // for (int i = 0; i < 100; i++) {
+        //     double num1 = t.sqrt_binarySearch_1(i, 6);
+        //     double num2 = t.sqrt_binarySearch_2(i, 0.000001);
+        //     System.out.println(i + " : " + num1 + ", " + num2);
+        //
+        // }
+        System.out.println(t.binarySearch(new int[]{2,4,5,6,8,89}, 8));
 
     }
 }

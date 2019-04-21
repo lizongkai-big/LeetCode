@@ -2,6 +2,7 @@ package TAG.BinarySearch;
 
 /**
  * 没想到，阶乘运算中用到了二分查找的思想（n 有一个不断折半的过程）
+ * 注意 n 为负数情形
  */
 public class _50__Pow_x__n_ {
     public double myPow1(double x, int n) {
@@ -35,6 +36,7 @@ public class _50__Pow_x__n_ {
 
     public static void main(String[] args) {
         _50__Pow_x__n_ pow_x__n_ = new _50__Pow_x__n_();
-        System.out.println(pow_x__n_.myPow1(2, 4));
+        System.out.println(pow_x__n_.myPow1(2, -4));
+        System.out.println(pow_x__n_.myPow2(2, -4));
     }
 }

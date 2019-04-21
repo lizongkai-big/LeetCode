@@ -1,9 +1,9 @@
-package NumberOperation;
+package TAG.Math;
 
 /**
- * 求二进制数中1的个数
+ * 一个数的二进制中1的个数
  */
-public class One_Num {
+public class One_Num_Binary {
     /**
      * 移位 + 计数
      * 与n的二进制位数有关，最多循环32次
@@ -29,14 +29,14 @@ public class One_Num {
     }
 
     /**
-     * 通过 n &= (n-1) 清除n的二进制数中的最低位的1
+     * 通过 n &= (n-1) 清除n的二进制数中的最低位的1，正负数都适用
      * @param n
      * @return
      */
-    public int BitCount_Quick(int n) {
+    public int BitCount_Quick_Negative(int n) {
         int c = 0;
         // n中1的个数
-        for (; n > 0; c ++) {
+        for (; n != 0; c ++) {
             // 清除 n 的最高位的 1
             n &= (n - 1);
         }
@@ -93,21 +93,35 @@ public class One_Num {
         return c;
     }
 
+    public int BitCount_negative(int n) {
+        if(n == 0 ) return 0;
+        int i = 1;
+        int count = 0;
+        while (i != 0) {
+            if((n & i) == i) {
+                count ++;
+            }
+            i >>= 1;
+        }
+        return count;
+    }
+
 
     public static void main(String[] args) {
         int i = 100;
 
         Long c = Long.valueOf(-2147483648);
         System.out.println(false ^ true);
-        One_Num one_num = new One_Num();
+        One_Num_Binary one_numDecimal = new One_Num_Binary();
         int num = -217;
         System.out.println(Integer.toBinaryString(num));
-        System.out.println(one_num.BitCount_Normal(num));
-        System.out.println(one_num.BitCount_Normal_Ahead(num));
-        System.out.println(one_num.BitCount_Quick(num));
-        System.out.println(one_num.BitCount_Dynamic_Table(num));
-        System.out.println(one_num.BitCount_Static_Table(num));
-        System.out.println(one_num.BitCount_Static_Table_2(num));
+        System.out.println(one_numDecimal.BitCount_Quick_Negative(num));
+        if(num < 0) return;
+        System.out.println(one_numDecimal.BitCount_Normal(num));
+        System.out.println(one_numDecimal.BitCount_Normal_Ahead(num));
+        System.out.println(one_numDecimal.BitCount_Dynamic_Table(num));
+        System.out.println(one_numDecimal.BitCount_Static_Table(num));
+        System.out.println(one_numDecimal.BitCount_Static_Table_2(num));
 
     }
 }

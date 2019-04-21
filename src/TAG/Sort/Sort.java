@@ -36,37 +36,14 @@ public class Sort {
      */
     public void insert_sort(int[] nums) {
         int len = nums.length;
-        for (int i = 0; i < len - 1; i++) {
-            // 让新的元素和左边已排序的元素逐渐交换以有序
-            // 隐藏的冒泡，多了交换过程，不如直接赋值快啊；后者一行，这个三行
-            /*for (int j = i + 1; j > 0; j--) {
-                if(nums[j] < nums[j - 1]) {
-                    int t = nums[j];
-                    nums[j] = nums[j - 1];
-                    nums[j - 1] = t;
-                }
-                else
-                    break;
-            }*/
-            // 未实现，思想：找到待插入元素排序后的位置，移动该位置右边的元素
-            // 且不说实现的对与错，干嘛不直接移动嘞？
-            /*for (int j = i; j >= 0; j--) {
-                if(nums[j] >= nums[i + 1]) {
-                    continue;
-                }
-                int t = nums[i + 1];
-                for (int k = i; k >= j + 1; k--) {
-                    nums[k + 1] = nums[k];
-                }
-                nums[j+1] = t;
-            }*/
+        for (int i = 1; i < len - 1; i++) {
             // 让左边已有序的元素中大于待插入元素的元素右移
-            int t = nums[i + 1];
-            int j = i;
+            int t = nums[i];
+            int j = i-1;
             // 查找并移动到插入的位置
             for (; j >= 0; j--) {
                 if (nums[j] > t) {
-                    // 数据移动
+                    // 数据移动，比冒泡排序的交换要简单
                     nums[j + 1] = nums[j];
                 } else
                     break;
@@ -197,6 +174,33 @@ public class Sort {
     }
 
     /**
+     * 快排的迭代实现
+     * @param nums
+     */
+    public void quick_sort_iterative(int[] nums) {
+        int lo = 0, hi = nums.length-1;
+        int stack[] = new int[hi-lo+1];
+        int inx = 0;
+        stack[inx++] = lo;
+        stack[inx++] = hi;
+        while (inx > 0) {
+            hi = stack[--inx];
+            lo = stack[--inx];
+
+            int q = partition(nums, lo, hi);
+            if(q != lo) {
+                stack[inx++] = lo;
+                stack[inx++] = q-1;
+            }
+            if(q != hi) {
+                stack[inx++] = q+1;
+                stack[inx++] = hi;
+            }
+        }
+        System.out.println(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+    }
+
+    /**
      * 获取分区点
      * @param nums
      * @param p
@@ -216,10 +220,38 @@ public class Sort {
             }
             j ++;
         }
-        int t = nums[i];
-        nums[i] = nums[r];
-        nums[r] = t;
+        nums[r] = nums[i];
+        nums[i] = pivot;
         return i;
+    }
+
+    /**
+     * 获取分界点，按照nums的绝对值进行比较（小米现场面试题）
+     * @param nums
+     * @param p
+     * @param q
+     * @return
+     */
+    public int partition_abs(int[] nums, int p, int q) {
+        int pivot = Math.abs(nums[q]);
+        int i = p, j = p;
+        while (j < q) {
+            int temp = Math.abs(nums[j]);
+            // 因为要求绝对值相等的两个数，正数在前，负数在后，所以！把7视为小于-7！
+            if(temp < pivot || nums[j] == pivot) {
+                swap(nums, i, j);
+                i ++;
+            }
+            j ++;
+        }
+        swap(nums, i, q);
+        return i;
+    }
+
+    public void swap(int[] a, int i, int j) {
+        int t = a[i];
+        a[i] = a[j];
+        a[j] = t;
     }
 
     public static void main(String[] args) {

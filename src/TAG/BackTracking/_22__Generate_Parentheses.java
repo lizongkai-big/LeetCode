@@ -70,6 +70,7 @@ public class _22__Generate_Parentheses {
         /************************************KEY DIFFERENCE*************************************/
         // 既考虑左右括号的个数，也考虑两者之间的关系，就能够保证最终形成的字符串是有效的
         if (open < max)
+            // str要和“(”相加，以对带(的情况进行回溯，同时又要保持本色，以对别的情形进行回溯，所以str + "("正合适；open+1同理
             backtrack(list, str + "(", open + 1, close, max);
         if (close < open)
             backtrack(list, str + ")", open, close + 1, max);

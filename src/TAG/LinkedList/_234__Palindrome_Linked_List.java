@@ -15,7 +15,7 @@ public class _234__Palindrome_Linked_List {
     public boolean isPalindrome(ListNode head) {
         // zero node or only one node
         if(head == null || head.next == null) return true;
-        ListNode pre = null; // pre初始化不能是head，不然在倒置时会有head.next = head，而head.next本身指向head，形成一个循环！
+        ListNode pre = null; // pre初始化不能是head，不然在倒置时会有head.next = pre(head)，而head.next本身指向head，形成一个循环！
         ListNode slow = head;
         ListNode fast = head;
         while(fast != null && fast.next != null) {
@@ -29,6 +29,13 @@ public class _234__Palindrome_Linked_List {
             pre = tmp;
         }
         /*让slow指向链表的后半部分的开始*/
+        /**设链表长度为len, 因为fast走了奇数（1+2*x）步，slow走了1+x步。
+         * 如果链表长度是偶数，则循环的跳出条件是fast==null，fast.next!==null，
+         * 此时fast走了len+1步，根据len+1=1+2*x，slow走了len/2+1步，已经指向链表的后一半的第一个元素；
+         * 如果链表长度为奇数，循环跳出条件为fast.next==null，fast!=null，
+         * 此时fast走了len步，根据len+1=1+2*x，此时slow走了(len-1)/2+1，也就是(len+1)/2步，正指向链表的中间元素，
+         * 所以要后移一位
+         * */
         if(fast != null)
             slow = slow.next;
         while(slow != null) {
