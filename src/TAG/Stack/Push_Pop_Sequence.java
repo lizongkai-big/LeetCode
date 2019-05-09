@@ -3,7 +3,7 @@ package TAG.Stack;
 import java.util.Stack;
 
 /**
- * 根据入栈队列，判断出栈队列是否正确
+ * 根据入栈序列，判断出栈序列是否正确；序列中数字不重复
  */
 public class Push_Pop_Sequence {
     public boolean IsPopOrder(int [] pushA,int [] popA) {

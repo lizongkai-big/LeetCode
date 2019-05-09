@@ -1,8 +1,11 @@
 package TAG.DP;
 
+import java.util.Arrays;
+
 public class LEARN {
     public static void main(String[] args) {
         Zero_One_Package zeroOnePackage = new Zero_One_Package();
+        zeroOnePackage.knapsack_withValue(new int[]{2,2,4,6,3}, new int[]{3,4,8,9,6}, 5, 9);
         System.out.println(zeroOnePackage.lowestEditDistance_DP1(
                 new String("1234673mitcnu").toCharArray(),
                 6,
@@ -17,6 +20,11 @@ class Zero_One_Package {
     private int n = 5; // 物品个数
     private int w = 9; // 背包承受的最大重量
 
+    /**
+     *
+     * @param i 将要决策的第i个物品
+     * @param cw 背包中已有重量
+     */
     public void f_Recrucive(int i, int cw) {
         if (cw == w || i == n) {
             if (cw > maxW) maxW = cw;
@@ -29,7 +37,11 @@ class Zero_One_Package {
     }
 
     private boolean[][] mem = new boolean[5][10]; // 备忘录，默认值 false
-
+    /**
+     * 使用数组记录重复状态，避免冗余计算
+     * @param i 将要决策的第i个物品
+     * @param cw 背包中已有重量
+     */
     public void f_Recrusive_Memo(int i, int cw) { // 调用 f(0, 0)
         if (cw == w || i == n) { // cw==w 表示装满了，i==n 表示物品都考察完了
             if (cw > maxW) maxW = cw;
@@ -43,9 +55,15 @@ class Zero_One_Package {
         }
     }
 
-
-    // weight: 物品重量，n: 物品个数，w: 背包可承载重量
+    /**
+     * 0-1背包，使用n维数组记录状态
+     * @param weight 物品重量
+     * @param n 物品个数
+     * @param w 背包可承载重量
+     * @return
+     */
     public int knapsack(int[] weight, int n, int w) {
+        // 在阶段i，放入背包中物品总的重量的最大值j，存在与否
         boolean[][] states = new boolean[n][w + 1]; // 默认值 false
         states[0][0] = true;  // 第一行的数据要特殊处理，可以利用哨兵优化
         states[0][weight[0]] = true;
@@ -53,7 +71,10 @@ class Zero_One_Package {
             for (int j = 0; j <= w; ++j) {// 不把第 i 个物品放入背包
                 if (states[i - 1][j] == true) states[i][j] = states[i - 1][j];
             }
-            for (int j = 0; j <= w - weight[i]; ++j) {// 把第 i 个物品放入背包
+            // 把第 i 个物品放入背包，
+            // j: 背包中已有物品的总重量（要放得进去）
+            for (int j = 0; j <= w - weight[i]; ++j) {
+                // 在上一个阶段，这个背包
                 if (states[i - 1][j] == true) states[i][j + weight[i]] = true;
             }
         }
@@ -63,12 +84,21 @@ class Zero_One_Package {
         return 0;
     }
 
+    /**
+     * 0-1背包，使用一维数组记录状态
+     * @param items
+     * @param n
+     * @param w
+     * @return
+     */
     public static int knapsack2(int[] items, int n, int w) {
         boolean[] states = new boolean[w + 1]; // 默认值 false
         states[0] = true;  // 第一行的数据要特殊处理，可以利用哨兵优化
         states[items[0]] = true;
-        for (int i = 1; i < n; ++i) { // 动态规划
-            for (int j = w - items[i]; j >= 0; --j) {// 把第 i 个物品放入背包
+        for (int i = 1; i < n; ++i) { // n 个阶段
+            // 把第 i 个物品放入背包
+            // j: 背包中已有物品的总重量（要放得进去）
+            for (int j = w - items[i]; j >= 0; --j) {
                 if (states[j] == true) states[j + items[i]] = true;
             }
         }
@@ -78,25 +108,70 @@ class Zero_One_Package {
         return 0;
     }
 
+    int[] weighs = {2,2,4,6,3};
+    int[] values = {3,4,8,9,6};
+    int count = weighs.length;
+    int bagWeigh = 9;
+    int maxV = Integer.MIN_VALUE;
+    /**
+     * 0-1背包 一个最大承重为w的背包，一堆标有重量和价值的物品，如何选择物品使得背包中物品的价值最大
+     * 回溯解法
+     * 判断第n个物品，背包中已有物品重量w，价值v
+     * @param i
+     * @param w
+     * @param v
+     * @return
+     */
+    public void knapsack_backtracking(int i, int w, int v) {
+        if(i == count || w == bagWeigh) {
+            if(v > maxV) maxV = v;
+            return;
+        }
+        knapsack_backtracking(i+1, w, v);
+        if(w + weighs[i] <= bagWeigh) {
+            knapsack_backtracking(i+1, w+weighs[i], v+values[i]);
+        }
+    }
+
+    /**
+     * 0-1背包 一个最大承重为w的背包，一堆标有重量和价值的物品，如何选择物品使得背包中物品的价值最大
+     * n维数组记录状态
+     * @param weight
+     * @param value
+     * @param n
+     * @param w
+     * @return
+     */
     public static int knapsack_withValue(int[] weight, int[] value, int n, int w) {
+        // n个阶段，w+1种背包重量，值为在i阶段，背包重量为j的情况下，背包中物品的总价值
         int[][] states = new int[n][w + 1];
         for (int i = 0; i < n; ++i) { // 初始化 states
-            for (int j = 0; j < w + 1; ++j) {
-                states[i][j] = -1;
-            }
+            Arrays.fill(states[i], -1);
         }
-        states[0][0] = 0;
-        states[0][weight[0]] = value[0];
-        for (int i = 1; i < n; ++i) { // 动态规划，状态转移
-            for (int j = 0; j <= w; ++j) { // 不选择第 i 个物品
-                if (states[i - 1][j] >= 0) states[i][j] = states[i - 1][j];
+        // 初始化
+        states[0][0] = 0; states[0][weight[0]] = value[0];
+        for (int k = 1; k < n; k++) { // n个阶段
+            // 决策1: 不要这个物品
+            for (int l = 0; l <= w; l++) {
+                // 在上一个状态的基础上
+                if(states[k-1][l] >= 0)
+                    // 重量不变，价值也不变
+                    states[k][l] = states[k-1][l];
             }
-            for (int j = 0; j <= w - weight[i]; ++j) { // 选择第 i 个物品
-                if (states[i - 1][j] >= 0) {
-                    int v = states[i - 1][j] + value[i];
-                    if (v > states[i][j + weight[i]]) {
-                        states[i][j + weight[i]] = v;
+            // 决策2：要这个物品
+            // 背包中能放得下这个物品
+            for (int l = 0; l <= w-weight[k]; l++) {
+                // 在上一个状态的基础上
+                if(states[k-1][l] >= 0) {
+                    // 新的背包价值怎么来的？之后判断背包中有哪些物品就这么判断
+                    int v = states[k-1][l] + value[k];
+                    // 如果该物品放进背包的话，此时背包重量为l+weigh[k]，
+                    // 背包中物品的总价值大于现在背包中的价值，也就是背包中重量相同，放进去比不放价值要大，干嘛不放呢？
+                    if(v > states[k][l+weight[k]]) {
+                        states[k][l+weight[k]] = v;
                     }
+                    // 能放进背包，但不放，因为这个物品的价值较小
+                    else {}
                 }
             }
         }
@@ -105,6 +180,29 @@ class Zero_One_Package {
         for (int j = 0; j <= w; ++j) {
             if (states[n - 1][j] > maxvalue) maxvalue = states[n - 1][j];
         }
+        // 用于确定背包中有哪些物品
+        int maxVlaue = -1;
+        int maxWeight = 0;
+        for (int k = 0; k <= w; k++) {
+            if(states[n-1][k] > maxVlaue) {
+                maxWeight = k;
+                maxVlaue =states[n-1][k];
+            }
+        }
+        System.out.println(maxVlaue + "  " + maxWeight);
+        // 那么，都是选择了哪些物品装进背包了呢？
+        // 找出背包中都放了哪些物品，从后往前判断
+        for (int k = n-1; k >= 1; k--) {
+            // 因为背包中能放下这个物品，so可能有这个物品
+            // && 从上一个阶段来看，正是因为放入这个物品，才使得背包达到价值最大的情况
+            if(maxWeight-weight[k] >= 0
+                    && states[k-1][maxWeight-weight[k]] == maxVlaue-value[k]) {
+                System.out.println("第"+(k+1)+"个物品，价值："+value[k] + "，重量：" + weight[k]);
+                maxVlaue -= value[k];
+                maxWeight -= weight[k];
+            }
+        }
+        if(maxVlaue != 0) System.out.println("第"+1+"个物品，价值："+value[0] + "，重量：" + weight[0]);
         return maxvalue;
     }
 

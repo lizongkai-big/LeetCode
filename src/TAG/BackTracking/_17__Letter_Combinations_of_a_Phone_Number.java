@@ -16,31 +16,7 @@ public class _17__Letter_Combinations_of_a_Phone_Number {
         int len = digits.length();
         for(int i = 0; i < len; i ++) {
             // Main
-            String s = "";
-            if(digits.charAt(i) == '2') {
-                s = "abc";
-            }
-            else if(digits.charAt(i) == '3') {
-                s = "def";
-            }
-            else if(digits.charAt(i) == '4') {
-                s = "ghi";
-            }
-            else if(digits.charAt(i) == '5') {
-                s = "jkl";
-            }
-            else if(digits.charAt(i) == '6') {
-                s = "mno";
-            }
-            else if(digits.charAt(i) == '7') {
-                s = "pqrs";
-            }
-            else if(digits.charAt(i) == '8') {
-                s = "tuv";
-            }
-            else if(digits.charAt(i) == '9') {
-                s = "wxyz";
-            }
+            String s = getLetter(digits.charAt(i));
             // second
             if(res.size() == 0) {
                 for(int j = 0; j < s.length(); j ++) {
@@ -76,6 +52,60 @@ public class _17__Letter_Combinations_of_a_Phone_Number {
                     res.addLast(t + s.charAt(c));
                 }
             }
+        }
+        return res;
+    }
+
+    public List<String> letterCombinations_backtracking(String digits) {
+        List<String> res = new ArrayList<>();
+        if(digits == null || digits.length() == 0) return res;
+        lbRecur(digits, 0, "", res);
+        return res;
+    }
+
+    public void lbRecur(String digits, int inx, String had, List<String> res) {
+        int len = digits.length();
+        if(inx == len) {
+            res.add(had);
+            return;
+        }
+
+        String letter = getLetter(digits.charAt(inx));
+        int letterLen = letter.length();
+        for (int j = 0; j < letterLen; j++) {
+            lbRecur(digits, inx+1, had+letter.charAt(j), res);
+        }
+
+    }
+
+    public String getLetter(char num) {
+        String res = "";
+        switch (num) {
+            case '1': break;
+            case '2':
+                res = "abc";
+                break;
+            case '3':
+                res = "def";
+                break;
+            case '4':
+                res = "ghi";
+                break;
+            case '5':
+                res = "jkl";
+                break;
+            case '6':
+                res = "mno";
+                break;
+            case '7':
+                res = "pqrs";
+                break;
+            case '8':
+                res = "tuv";
+                break;
+            case '9':
+                res = "wxyz";
+                break;
         }
         return res;
     }

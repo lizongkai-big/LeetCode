@@ -82,7 +82,7 @@ public class _47__Permutations_II {
 
     public static void main(String[] args) {
         _47__Permutations_II permutationsII = new _47__Permutations_II();
-        List<List<Integer>> lists = permutationsII.permuteUnique_Higher(new int[]{1,1, 2, 3, 4, 7});
+        List<List<Integer>> lists = permutationsII.permuteUnique_Higher(new int[]{1,1, 2, 3});
 
         for (List<Integer> list : lists)
             System.out.println(list);
