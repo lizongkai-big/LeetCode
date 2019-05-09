@@ -7,6 +7,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class tmp {
+    public int i, j;
+    public tmp(int i, int j){
+        this.i = i;
+        this.j = j;
+    }
     public int minInRotatedArray(int[] array) {
         int lo = 0, hi = array.length;
         int mid = lo;
@@ -99,13 +104,45 @@ public class tmp {
         System.out.println(Arrays.stream(res).boxed().collect(Collectors.toList()));
     }
 
-    public List<String> restoreIpAddresses(String s) {
-        List<String> res = new ArrayList<>();
-        return res;
+    public void findFirstBig(int[] nums) {
+        int len = nums.length;
+        for (int k = 0; k < len; k++) {
+            int res = -1;
+            for (int l = k-1; l >= 0; l--) {
+                if(nums[l] > nums[k]) {
+                    res = nums[l];
+                    break;
+                }
+            }
+            System.out.print(res + " ");
+        }
     }
 
-
-
+    public void findFirstBig_Stack(int[] nums) {
+        int len = nums.length;
+        // 存放下标
+        Stack<Integer> stack = new Stack<>();
+        int[] res = new int[len];
+        Arrays.fill(res, -1);
+        for (int k = 0; k < len/2; k++) {
+            swap(nums, k, len-k-1);
+        }
+        for (int k = 0; k < len; k++) {
+            while (true) {
+                if (stack.isEmpty() || nums[k] <= nums[stack.peek()]) {
+                    stack.push(k);
+                    break;
+                }
+                else {
+                    res[stack.pop()] = nums[k];
+                }
+            }
+        }
+        for (int k = 0; k < len/2; k++) {
+            swap(res, k, len-k-1);
+        }
+        System.out.println(Arrays.stream(res).boxed().collect(Collectors.toList()));
+    }
 
 
     public void swap(int[] nums, int i, int j) {
@@ -115,7 +152,7 @@ public class tmp {
     }
 
     public static void main(String[] args) {
-        tmp t = new tmp();
+        tmp t = new tmp(1,1);
         int[] num = new int[]{-1, 1, -1, -3, -4, 5, 4, 1, 0, -5, 1, 2};
         // System.out.println(t.minInRotatedArray(new int[]{3,4,5,0,1,2}));
         // System.out.println(t.minInRotatedArray(new int[]{0,1,2,3,4,5}));
@@ -124,6 +161,9 @@ public class tmp {
         // t.quick_sort_recursive(num);
         // t.quick_sort_iterative(num);
         // System.out.println(t.IsPopOrder(new int[]{1}, new int[]{4}));
-        t.countingSort(num);
+        // t.knapsack(new int[]{2,2,4,6,3}, new int[]{3,4,8,9,6}, 5, 9);
+        t.findFirstBig(num);
+        System.out.println();
+        t.findFirstBig_Stack(num);
     }
 }
