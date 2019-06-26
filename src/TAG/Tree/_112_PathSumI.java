@@ -3,6 +3,8 @@ package TAG.Tree;
 import utils.TreeNode;
 
 public class _112_PathSumI {
+	// maybe consider purning when 'sum' < root.val, if 'root' isn't leaf, return false directly;
+	// but the 'sum' and 'node'.val maybe negative, at this time, 'sum' < root.val is normal, shouldn't be purn.
     public boolean hasPathSum(TreeNode root, int sum) {
         if(root == null)
             return false;

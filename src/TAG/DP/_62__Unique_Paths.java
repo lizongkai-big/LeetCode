@@ -31,9 +31,7 @@ public class _62__Unique_Paths {
                 cur[j] = cur[j - 1] + pre[j];
             }
             // swap cur-pre
-            int[] t = cur;
-            cur = pre;
-            pre = t;
+            pre = cur;
         }
         return cur[n-1];
     }

@@ -16,8 +16,8 @@ public class _67__Add_Binary {
                 t += b.charAt(len2)-'0';
                 len2 --;
             }
+            // % and /，don't reverse them!
             res[len--] = (char)(t % 2 + '0');
-
             t /= 2;
         }
         if(t == 1) res[len--] = '1';
