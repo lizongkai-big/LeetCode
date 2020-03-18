@@ -7,7 +7,7 @@ public class MinInRotatedArray {
         // 让lo指向前面的数组，hi指向后面的数组，当两者之差为1的时候，hi指向的即为数组中的最小值
         int lo = 0, hi = array.length - 1;
         int mid = lo;
-        // 特殊情形1：array[lo...hi] 不是有序的，为此初始化mid=lo
+        // 特殊情形1：array[lo...hi] 是有序的，为此初始化mid=lo
         while (array[lo] >= array[hi]) {
             if(hi - lo <= 1) {
                 mid = hi;

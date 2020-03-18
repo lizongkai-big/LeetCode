@@ -5,6 +5,7 @@ package TAG.BinarySearch;
  * 注意 n 为负数情形
  */
 public class _50__Pow_x__n_ {
+    // 阶数的二进制角度考虑
     public double myPow1(double x, int n) {
         if (n == 0) return 1;
         double pow = 1.0;
@@ -23,6 +24,7 @@ public class _50__Pow_x__n_ {
         return n > 0 ? pow : 1 / pow;
     }
 
+    // 二分角度
     public double myPow2(double x, int n) {
         if (n == 0) return 1;
         return n > 0 ? power(x, n) : 1 / power(x, -n);

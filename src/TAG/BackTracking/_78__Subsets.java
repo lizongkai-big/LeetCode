@@ -107,6 +107,7 @@ public class _78__Subsets {
         dfs(res, new ArrayList<>(), nums, 0);
         return res;
     }
+
     public void dfs(List<List<Integer>> res, List<Integer> list, int[] nums, int inx) {
         res.add(new ArrayList<>(list));
         for (int i = inx; i < nums.length; i++) {

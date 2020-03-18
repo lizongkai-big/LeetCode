@@ -53,6 +53,7 @@ public class pracitice {
                 hi = mid - 1;
             }
         }
+        // 小值
         res = hi;
         if(hi * hi > num) {
             res -= 1;
@@ -114,6 +115,7 @@ public class pracitice {
     /**
      * 实际上，很多人都觉得变形的二分查找很难写，主要原因是太追求第第一种那样完美、简洁的写法。
      * 而对于我们做工程开发的人来说，代码易读懂、没 Bug，其实更重要，所以我觉得第二种写法更好。
+     * 查找第一个值等于给定值的元素下标
      * @param nums
      * @param target
      * @return

@@ -1,3 +1,5 @@
+package TAG.Greedy;
+
 class _55_Jump_Game {
     public boolean canJump(int[] nums) {
         // 极限情况判断

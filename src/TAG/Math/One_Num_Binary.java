@@ -37,7 +37,7 @@ public class One_Num_Binary {
         int c = 0;
         // n中1的个数
         for (; n != 0; c ++) {
-            // 清除 n 的最高位的 1
+            // 清除 n 的最低位的 1
             n &= (n - 1);
         }
         return c;

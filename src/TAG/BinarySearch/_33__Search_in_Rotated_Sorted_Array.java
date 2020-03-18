@@ -31,7 +31,6 @@ public class _33__Search_in_Rotated_Sorted_Array {
                 else {
                     left = mid + 1;
                 }
-
             }
         }
         return res;

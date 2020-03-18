@@ -8,16 +8,18 @@ public class TreeNode {
     public TreeNode(int x) { val = x; }
 
     public void Mirror(TreeNode root) {
-        root = getMirror(root);
+        if(root == null)
+            return;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+
+        root.right = left;
+        root.left = right;
+
+        Mirror(root.left);
+        Mirror(root.right);
     }
 
-    private TreeNode getMirror(TreeNode node) {
-        if(node == null) return null;
-        TreeNode tmp = node.left;
-        node.left = getMirror(node.right);
-        node.right = getMirror(tmp);
-        return node;
-    }
 
     public static void leftTraverse(TreeNode node) {
         if(node == null) return;
